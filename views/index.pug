@@ -1,2 +1,39 @@
-h1 TO-DO App with NodeJS
-	
+extends common.pug
+
+block content
+    div(class="w-75 m-auto text-center")
+        h1 To-do APP
+        form(action="/api/task/create" method="POST")
+            div(class="form-group")
+                input(class="form-control d-inline w-25 me-3" name="task")
+                button(type="submit" class="btn btn-primary") ADD
+        h2(class="my-3 text-danger") To-do List
+            div(class="w-75 m-auto mt-3")
+                ul(class="list-group list-group-flush text-start")
+                    each task in todo
+                        li(class="list-group-item d-flex justify-content-between")
+                            input(class="form-check-input me-3" type="checkbox" onClick="changeStatus('" + task.id + "')")
+                            span= task.content
+                            div(class="btn-group" role="group")
+                                button(class="btn btn-info" onClick="showEditModal('"+ task.id +"')" data-bs-toggle="modal" data-bs-target="#editModal") Edit
+                                a(href="/api/task/delete/" + task.id class="btn btn-danger") Remove
+                            
+        h2(class="my-3 text-success") Done 
+            div(class="w-75 m-auto mt-3")
+                ul(class="list-group list-group-flush text-start")
+                    each task in done
+                        li(class="list-group-item d-flex justify-content-between")
+                            input(class="form-check-input me-3" type="checkbox" onClick="changeStatus('" + task.id + "')" checked)
+                            span(class="text-decoration-line-through")= task.content
+                            span &nbsp;
+    div(class="modal fade" id="editModal")
+        div(class="modal-dialog")
+            div(class="modal-content")
+                div(class="modal-header")
+                    h5(class="modal-title") Edit Task
+                div(class="modal-body")
+                    input(type="text" class="form-control" id="taskContent")
+                div(class="modal-footer")
+                    button(class="btn btn-primary" onClick="editTask()") Save
+                    button(class="btn btn-secondary" data-bs-dismiss="modal") Close
+    script(src="/index.js")
