@@ -1,0 +1,24 @@
+extends ../share/bootstrap.pug 
+
+block content
+    div.container-fluid.vh-100.d-flex.flex-column
+        include ../share/navbar.pug
+        div.container-xl.flex-grow-1.d-flex.align-items-center
+            div.w-100.m-auto.bg-light.border.border-primary.rounded.p-5
+                form.d-flex.flex-column.justify-content-between(action="/auth/register", method="post")
+                    h1.text-center.mb-3 REGISTER
+                    div.form-group.mb-3
+                        label.form-label(for="username") Username:
+                        input.form-control(type="text" name="username" value=username ? username : '')
+                        small.text-danger #{usernameError}
+                    div.form-group.mb-3
+                        label.form-label(for="password") Password:
+                        input.form-control(type="password" name="password" value=password ? password : '')
+                        small.text-danger #{passwordError}
+                    div.form-group.mb-3
+                        label.form-label(for="retypePassword") Re-type Password:
+                        input.form-control(type="password" name="retypePassword" value=retypePassword ? retypePassword : '')
+                        small.text-danger #{retypePasswordError}
+                    div.text-center
+                        button.btn.btn-primary.btn-lg(type="submit") Login
+

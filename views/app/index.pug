@@ -1,0 +1,40 @@
+extends ../share/bootstrap.pug
+
+block content
+    include ../share/navbar.pug
+    div.w-75.m-auto.text-center
+        h1 To-do APP
+        form(action="/task/create" method="POST")
+            div.form-group
+                input.form-control.d-inline.w-25.me-3(name="task")
+                button.btn.btn-primary(type="submit") ADD
+        h2.my-3.text-danger To-do List
+            div.w-75.m-auto.mt-3
+                ul.list-group.list-group-flush.text-start
+                    each task in todo
+                        li.list-group-item.d-flex.justify-content-between
+                            input.form-check-input.me-3(type="checkbox" onClick="changeStatus('" + task.id + "')")
+                            span= task.content
+                            div.btn-group(role="group")
+                                button.btn.btn-info(onClick="showEditModal('"+ task.id +"')" data-bs-toggle="modal" data-bs-target="#editModal") Edit
+                                a(href="/task/delete/" + task.id class="btn btn-danger") Remove
+                            
+        h2.my-3.text-success Done 
+            div.w-75.m-auto.mt-3
+                ul.list-group.list-group-flush.text-start
+                    each task in done
+                        li.list-group-item.d-flex.justify-content-between
+                            input.form-check-input.me-3(type="checkbox" onClick="changeStatus('" + task.id + "')" checked)
+                            span.text-decoration-line-through= task.content
+                            span &nbsp;
+    div.modal.fade(id="editModal")
+        div.modal-dialog
+            div.modal-content
+                div.modal-header
+                    h5.modal-title Edit Task
+                div.modal-body
+                    input.form-control(type="text" id="taskContent")
+                div.modal-footer
+                    button.btn.btn-primary(onClick="editTask()") Save
+                    button.btn.btn-secondary(data-bs-dismiss="modal") Close
+    script(src="/index.js")

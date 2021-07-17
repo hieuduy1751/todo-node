@@ -4,6 +4,8 @@ const controllers = require('../../controllers/task.controller');
 
 const router = express.Router();
 
+router.get('/todo', controllers.home);
+
 router.get('/:id', controllers.getTask);
 
 router.post('/create', controllers.postCreate);

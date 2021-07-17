@@ -2,7 +2,7 @@ let editID;
 let inputField = document.getElementById('taskContent');
 
 function changeStatus(id) {
-    window.location.replace(`http://localhost:3000/api/task/status/${id}`);
+    window.location.replace(`http://localhost:3000/task/status/${id}`);
 }
 
 function showEditModal(id) {
@@ -10,5 +10,5 @@ function showEditModal(id) {
 }
 
 function editTask() {
-    window.location.replace(`http://localhost:3000/api/task/edit/${editID}?content=${inputField.value}`) 
+    window.location.replace(`http://localhost:3000/task/edit/${editID}?content=${inputField.value}`) 
 }

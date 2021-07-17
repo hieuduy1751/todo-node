@@ -1,19 +1,11 @@
 {
-  "todo": [
+  "todo": [],
+  "users": [
     {
-      "id": "MoE8dFEsf",
-      "content": "2",
-      "status": false
-    },
-    {
-      "id": "Ulo_K6fSQs",
-      "content": "3",
-      "status": false
-    },
-    {
-      "id": "tm0ImRMfY",
-      "content": "321",
-      "status": false
+      "userID": "CdJ3fj6nS",
+      "username": "hieuduy1751",
+      "password": "e10adc3949ba59abbe56e057f20f883e",
+      "token": "d2ecac50e8f5dfac32cebe4e3af873d8"
     }
   ]
 }

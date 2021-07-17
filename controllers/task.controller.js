@@ -2,7 +2,7 @@ const shortid = require('shortid');
 const db = require('../db');
 
 module.exports.home = (req, res) => {
-	res.render('index', {
+	res.render('./app/index', {
 		todo: db.get('todo').value().filter(item => item.status == false).reverse(),
 		done: db.get('todo').value().filter(item => item.status == true)
 	});
@@ -17,7 +17,7 @@ module.exports.postCreate = (req, res) => {
 	db.get('todo')
 		.push(body)
 		.write();
-	res.redirect('/');
+	res.redirect('/task/todo');
 }
 
 module.exports.delete = (req, res) => {
@@ -35,7 +35,7 @@ module.exports.delete = (req, res) => {
 		db.get('todo')
 			.splice(index, 1)
 			.write();
-		res.redirect('/');
+		res.redirect('/task/todo');
 	}
 }
 
@@ -43,14 +43,14 @@ module.exports.changeStatus = (req, res) => {
 	let element = db.get('todo').find(item => item.id === req.params.id).value();
 	element.status = element.status == false ? true : false;
 	db.get('todo').write();
-	res.redirect('/');
+	res.redirect('/task/todo');
 }
 
 module.exports.editTask = (req, res) => {
 	let element = db.get('todo').find(item => item.id === req.params.id).value();
 	element.content = req.query.content;
 	db.get('todo').write();
-	res.redirect('/');
+	res.redirect('/task/todo');
 }
 
 module.exports.getTask = (req, res) => {
