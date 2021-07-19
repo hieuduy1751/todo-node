@@ -79,9 +79,13 @@ module.exports.regexRegister = (req, res, next) => {
 }
 
 module.exports.checkCookie = (req, res, next) => {
-    let user = db.get('users').find({username: req.cookies.username}).value();
-    if(!user || user.token != req.cookies.sessionID)
+    let user = db.get('users').find(
+        {username: req.signedCookies.sessionID}
+        ).value();
+    if(!user || user.username != req.signedCookies.sessionID)
         res.redirect('/auth/login');
-    else
+    else {
+        res.locals.user = user.username;
         next();
+    }
 }

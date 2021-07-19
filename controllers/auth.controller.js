@@ -13,10 +13,10 @@ module.exports.register = (req, res) => {
 module.exports.postLogin = (req, res) => {
     let user = db.get('users').find({username: res.locals.username}).value();
     if(user && user.password == res.locals.password) {
-        user.token = md5(user.userID);
         db.write();
-        res.cookie('username', user.username);
-        res.cookie('sessionID', user.token);
+        res.cookie('sessionID', user.username, {
+            signed: true
+        });
         res.redirect('/task/todo')
     }
     else if(user) {
@@ -51,4 +51,9 @@ module.exports.postRegister = (req, res) => {
             .write();
         res.redirect('/auth/login');
     }
+}
+
+module.exports.logout = (req, res) => {
+    res.clearCookie('sessionID');
+    res.redirect('/auth/login');
 }

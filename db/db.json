@@ -1,11 +1,22 @@
 {
-  "todo": [],
   "users": [
     {
       "userID": "CdJ3fj6nS",
       "username": "hieuduy1751",
       "password": "e10adc3949ba59abbe56e057f20f883e",
-      "token": "d2ecac50e8f5dfac32cebe4e3af873d8"
+      "tasks": [
+        {
+          "id": "6xunECP6m",
+          "content": "hieu 123",
+          "status": true
+        },
+        {
+          "id": "clUsDuWgU",
+          "content": "321hieu",
+          "status": false
+        }
+      ]
     }
-  ]
+  ],
+  "todo": []
 }

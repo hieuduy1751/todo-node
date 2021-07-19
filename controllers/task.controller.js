@@ -1,10 +1,13 @@
 const shortid = require('shortid');
 const db = require('../db');
-
+let user;
 module.exports.home = (req, res) => {
+	user = db.get('users').find(
+		{username: req.signedCookies.sessionID}
+	).value();
 	res.render('./app/index', {
-		todo: db.get('todo').value().filter(item => item.status == false).reverse(),
-		done: db.get('todo').value().filter(item => item.status == true)
+		todo: user.tasks.filter(item => item.status == false),
+		done: user.tasks.filter(item => item.status == true)
 	});
 } 
 
@@ -14,40 +17,38 @@ module.exports.postCreate = (req, res) => {
 		content: req.body.task,
 		status: false
 	}
-	db.get('todo')
-		.push(body)
-		.write();
+	user.tasks.push(body)
+	db.get('users').write();
 	res.redirect('/task/todo');
 }
 
 module.exports.delete = (req, res) => {
 	let index = 0;
-	for(let i of db.get('todo').value()) {
+	for(let i of user.tasks) {
 		if(i.id === req.params.id)
 			break;
 		else
 			index++;
 	}
-	if(index === 0 && !db.get('todo').value()[0] === req.params.id) {
+	if(index === 0 && !user.tasks[0] === req.params.id) {
 		console.log('khong tim thay');
 	}
 	else {
-		db.get('todo')
-			.splice(index, 1)
-			.write();
+		user.tasks.splice(index, 1)
+		db.get('users').write();
 		res.redirect('/task/todo');
 	}
 }
 
 module.exports.changeStatus = (req, res) => {
-	let element = db.get('todo').find(item => item.id === req.params.id).value();
+	let element = user.tasks.find(item => item.id === req.params.id);
 	element.status = element.status == false ? true : false;
 	db.get('todo').write();
 	res.redirect('/task/todo');
 }
 
 module.exports.editTask = (req, res) => {
-	let element = db.get('todo').find(item => item.id === req.params.id).value();
+	let element = user.tasks.find(item => item.id === req.params.id);
 	element.content = req.query.content;
 	db.get('todo').write();
 	res.redirect('/task/todo');

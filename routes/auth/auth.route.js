@@ -13,4 +13,6 @@ router.post('/login', middleware.regexLogin, controllers.postLogin);
 
 router.post('/register', middleware.regexRegister, controllers.postRegister);
 
+router.get('/logout', controllers.logout);
+
 module.exports = router;
